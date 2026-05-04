@@ -196,6 +196,15 @@
       color: var(--muted);
     }
 
+    .cell-verified {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      white-space: nowrap;
+      color: var(--muted);
+    }
+    .cell-verified.yes { color: #4a9e6b; }
+    .cell-verified.no  { color: #b0aca4; }
+
     /* ── TAG ── */
     .tag {
       display: inline-block;
@@ -278,6 +287,7 @@
         <th>Romanisation</th>
         <th>Meaning</th>
         <th>Notes</th>
+        <th>Verified</th>
       </tr>
     </thead>
     <tbody id="vocab-body">
@@ -291,9 +301,7 @@
           <span class="tag">noun</span>
           <span class="tag">identity</span>
         </td>
-      </tr>
-
-      <tr data-cat="noun" data-search="อาเจียง ajieng elephant">
+        <td class="cell-verified no">No</td>
         <td class="cell-thai">อาเจียง</td>
         <td class="cell-roman">ajieng</td>
         <td class="cell-meaning">Elephant</td>
@@ -302,9 +310,8 @@
           <span class="tag">noun</span>
           <span class="tag">culture</span>
         </td>
+        <td class="cell-verified no">No</td>
       </tr>
-
-      <tr data-cat="phrase" data-search="กวย อาเจียง guay ajieng elephant people self-name">
         <td class="cell-thai">กวย อาเจียง</td>
         <td class="cell-roman">guay ajieng</td>
         <td class="cell-meaning">Elephant people</td>
@@ -313,6 +320,7 @@
           <span class="tag">phrase</span>
           <span class="tag">identity</span>
         </td>
+        <td class="cell-verified no">No</td>
       </tr>
 
       <tr data-cat="phrase" data-search="ดิ่ง บ่ ding bo i don't know negation">
@@ -324,45 +332,44 @@
           <span class="tag">phrase</span>
           <span class="tag">verb</span>
         </td>
+        <td class="cell-verified no">No</td>
       </tr>
-
-      <tr data-cat="phrase" data-search="ว่าละก้อ wa la gor what are you doing how are you greeting">
         <td class="cell-thai">ว่าละก้อ</td>
-        <td class="cell-roman">wa la gor</td>
+        <td class="cell-roman">wa la gaw</td>
         <td class="cell-meaning">What are you doing? / How are you?</td>
         <td class="cell-notes">
           Casual everyday greeting between กวย speakers.<br>
           <span class="tag">phrase</span>
           <span class="tag">greeting</span>
         </td>
+        <td class="cell-verified no">No</td>
       </tr>
-
-      <tr data-cat="noun" data-search="กะเทา hot temperature warm">
         <td class="cell-thai">กะเทา</td>
         <td class="cell-roman">ga-tao</td>
         <td class="cell-meaning">Hot (temperature)</td>
         <td class="cell-notes">
           <span class="tag">adjective</span>
         </td>
+        <td class="cell-verified no">No</td>
       </tr>
 
-      <tr data-cat="particle" data-search="เท้ tao question particle">
+      <tr data-cat="particle" data-search="เท้ te question particle">
         <td class="cell-thai">เท้</td>
-        <td class="cell-roman">tao</td>
+        <td class="cell-roman">te</td>
         <td class="cell-meaning">Question particle</td>
         <td class="cell-notes">
           Used to form questions; appears at end of phrase.<br>
           <span class="tag">particle</span>
         </td>
+        <td class="cell-verified no">No</td>
       </tr>
-
-      <tr data-cat="adjective" data-search="เอิม em good tasting delicious">
         <td class="cell-thai">เอิม</td>
         <td class="cell-roman">em</td>
         <td class="cell-meaning">Good tasting; delicious</td>
         <td class="cell-notes">
           <span class="tag">adjective</span>
         </td>
+        <td class="cell-verified no">No</td>
       </tr>
 
       <tr data-cat="particle" data-search="ห้า ha agreement yes indicator">
@@ -374,15 +381,15 @@
           <span class="tag">particle</span>
           <span class="tag">unconfirmed</span>
         </td>
+        <td class="cell-verified no">No</td>
       </tr>
-
-      <tr data-cat="adjective" data-search="กะไช full stomach satiated">
         <td class="cell-thai">กะไช</td>
         <td class="cell-roman">ga-chai</td>
         <td class="cell-meaning">Full (stomach)</td>
         <td class="cell-notes">
           <span class="tag">adjective</span>
         </td>
+        <td class="cell-verified no">No</td>
       </tr>
 
 
@@ -393,9 +400,8 @@
         <td class="cell-notes">
           <span class="tag">verb</span>
         </td>
+        <td class="cell-verified no">No</td>
       </tr>
-
-      <tr data-cat="particle" data-search="บ่ bo negation not ไม่">
         <td class="cell-thai">บ่</td>
         <td class="cell-roman">bo</td>
         <td class="cell-meaning">Negation — not</td>
@@ -404,17 +410,17 @@
           <span class="tag">particle</span>
           <span class="tag">grammar</span>
         </td>
+        <td class="cell-verified no">No</td>
       </tr>
-
-      <tr data-cat="phrase" data-search="เอิมเท้ em tao does it taste good question food">
         <td class="cell-thai">เอิมเท้</td>
-        <td class="cell-roman">em tao</td>
+        <td class="cell-roman">em te</td>
         <td class="cell-meaning">Does it taste good?</td>
         <td class="cell-notes">
           เอิม (tasty) + เท้ (question particle).<br>
           <span class="tag">phrase</span>
           <span class="tag">food</span>
         </td>
+        <td class="cell-verified no">No</td>
       </tr>
 
       <tr data-cat="phrase" data-search="เอิมห้า em ha yes it tastes good food answer">
@@ -426,6 +432,7 @@
           <span class="tag">phrase</span>
           <span class="tag">food</span>
         </td>
+        <td class="cell-verified no">No</td>
       </tr>
 
       <tr data-cat="phrase" data-search="กะไชแล้ว ga chai laew i'm full already eaten">
@@ -437,9 +444,8 @@
           <span class="tag">phrase</span>
           <span class="tag">food</span>
         </td>
+        <td class="cell-verified no">No</td>
       </tr>
-
-    </tbody>
   </table>
 
   <p class="no-results" id="no-results">No entries match your search.</p>
