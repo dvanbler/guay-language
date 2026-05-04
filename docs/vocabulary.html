@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vocabulary — กวย Language Archive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono&family=Noto+Serif+Thai:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #f8f7f4;
+      --surface:  #ffffff;
+      --border:   #d8d4cc;
+      --text:     #1a1a18;
+      --muted:    #6b6860;
+      --accent:   #2a5c8f;
+      --thai-col: #1a3a5c;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .site-title {
+      font-family: 'Noto Serif Thai', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--thai-col);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    nav a {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-left: 24px;
+    }
+    nav a:hover { color: var(--text); text-decoration: none; }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 24px 100px;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      margin-bottom: 36px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .page-header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .entry-count {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .source-note {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--surface);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      outline: none;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--muted); }
+
+    .filter-btn {
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--surface);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.82rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── VOCAB TABLE ── */
+    .vocab-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .vocab-table thead {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .vocab-table th {
+      padding: 10px 16px;
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .vocab-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.1s;
+    }
+    .vocab-table tbody tr:last-child { border-bottom: none; }
+    .vocab-table tbody tr:hover { background: #f2f0ec; }
+
+    .vocab-table td {
+      padding: 14px 16px;
+      vertical-align: top;
+    }
+
+    .cell-thai {
+      font-family: 'Noto Serif Thai', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--thai-col);
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .cell-roman {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.88rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .cell-meaning {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .cell-notes {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* ── TAG ── */
+    .tag {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--bg);
+      margin-right: 4px;
+      white-space: nowrap;
+    }
+
+    /* ── NO RESULTS ── */
+    .no-results {
+      text-align: center;
+      padding: 48px 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    /* ── ADD ENTRY NOTE ── */
+    .add-note {
+      margin-top: 32px;
+      padding: 16px 20px;
+      border: 1px dashed var(--border);
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="site-title">กวย อาเจียง</a>
+  <nav>
+    <a href="vocabulary.html" style="color: var(--text)">Vocabulary</a>
+  </nav>
+</header>
+
+<main>
+
+  <div class="page-header">
+    <div>
+      <h1>Vocabulary</h1>
+      <p class="source-note">Ban Ta Thip dialect · Surin province · verified by a native speaker</p>
+    </div>
+    <span class="entry-count" id="entry-count">14 entries</span>
+  </div>
+
+  <div class="filter-bar">
+    <input class="search-input" type="search" id="search" placeholder="Search กวย, romanisation, or English…" />
+    <button class="filter-btn active" data-cat="all">All</button>
+    <button class="filter-btn" data-cat="noun">Nouns</button>
+    <button class="filter-btn" data-cat="adjective">Adjectives</button>
+    <button class="filter-btn" data-cat="verb">Verbs</button>
+    <button class="filter-btn" data-cat="particle">Particles</button>
+    <button class="filter-btn" data-cat="phrase">Phrases</button>
+  </div>
+
+  <table class="vocab-table" id="vocab-table">
+    <thead>
+      <tr>
+        <th>กวย</th>
+        <th>Romanisation</th>
+        <th>Meaning</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody id="vocab-body">
+
+      <tr data-cat="noun" data-search="กวย guay people kuy ethnic group">
+        <td class="cell-thai">กวย</td>
+        <td class="cell-roman">guay</td>
+        <td class="cell-meaning">People; the Kuy ethnic group</td>
+        <td class="cell-notes">
+          Core ethnic self-identifier.<br>
+          <span class="tag">noun</span>
+          <span class="tag">identity</span>
+        </td>
+      </tr>
+
+      <tr data-cat="noun" data-search="อาเจียง ajieng elephant">
+        <td class="cell-thai">อาเจียง</td>
+        <td class="cell-roman">ajieng</td>
+        <td class="cell-meaning">Elephant</td>
+        <td class="cell-notes">
+          Central to กวย cultural identity and livelihood.<br>
+          <span class="tag">noun</span>
+          <span class="tag">culture</span>
+        </td>
+      </tr>
+
+      <tr data-cat="phrase" data-search="กวย อาเจียง guay ajieng elephant people self-name">
+        <td class="cell-thai">กวย อาเจียง</td>
+        <td class="cell-roman">guay ajieng</td>
+        <td class="cell-meaning">Elephant people</td>
+        <td class="cell-notes">
+          The กวย name for themselves as a people.<br>
+          <span class="tag">phrase</span>
+          <span class="tag">identity</span>
+        </td>
+      </tr>
+
+      <tr data-cat="phrase" data-search="ดิ่ง บ่ ding bor i don't know negation">
+        <td class="cell-thai">ดิ่ง บ่</td>
+        <td class="cell-roman">ding bor</td>
+        <td class="cell-meaning">I don't know</td>
+        <td class="cell-notes">
+          ดิ่ง = know · บ่ = negation (placed after verb, unlike Thai ไม่).<br>
+          <span class="tag">phrase</span>
+          <span class="tag">verb</span>
+        </td>
+      </tr>
+
+      <tr data-cat="phrase" data-search="ว่าละก้อ wa la gor what are you doing how are you greeting">
+        <td class="cell-thai">ว่าละก้อ</td>
+        <td class="cell-roman">wa la gor</td>
+        <td class="cell-meaning">What are you doing? / How are you?</td>
+        <td class="cell-notes">
+          Casual everyday greeting between กวย speakers.<br>
+          <span class="tag">phrase</span>
+          <span class="tag">greeting</span>
+        </td>
+      </tr>
+
+      <tr data-cat="noun" data-search="กะเทา hot temperature warm">
+        <td class="cell-thai">กะเทา</td>
+        <td class="cell-roman">ga-tao</td>
+        <td class="cell-meaning">Hot (temperature)</td>
+        <td class="cell-notes">
+          <span class="tag">adjective</span>
+        </td>
+      </tr>
+
+      <tr data-cat="particle" data-search="เท้ tao question particle">
+        <td class="cell-thai">เท้</td>
+        <td class="cell-roman">tao</td>
+        <td class="cell-meaning">Question particle</td>
+        <td class="cell-notes">
+          Used to form questions; appears at end of phrase.<br>
+          <span class="tag">particle</span>
+        </td>
+      </tr>
+
+      <tr data-cat="adjective" data-search="เอิม erm good tasting delicious">
+        <td class="cell-thai">เอิม</td>
+        <td class="cell-roman">erm</td>
+        <td class="cell-meaning">Good tasting; delicious</td>
+        <td class="cell-notes">
+          <span class="tag">adjective</span>
+        </td>
+      </tr>
+
+      <tr data-cat="particle" data-search="ห้า ha agreement yes indicator">
+        <td class="cell-thai">ห้า</td>
+        <td class="cell-roman">ha</td>
+        <td class="cell-meaning">Agreement indicator</td>
+        <td class="cell-notes">
+          Indicates agreement; exact usage (casual "yeah" vs formal "yes") to be confirmed.<br>
+          <span class="tag">particle</span>
+          <span class="tag">unconfirmed</span>
+        </td>
+      </tr>
+
+      <tr data-cat="adjective" data-search="กะไช full stomach satiated">
+        <td class="cell-thai">กะไช</td>
+        <td class="cell-roman">ga-chai</td>
+        <td class="cell-meaning">Full (stomach)</td>
+        <td class="cell-notes">
+          <span class="tag">adjective</span>
+        </td>
+      </tr>
+
+      <tr data-cat="particle" data-search="เหล่า lao action already happened completion aspect">
+        <td class="cell-thai">เหล่า</td>
+        <td class="cell-roman">lao</td>
+        <td class="cell-meaning">Completive aspect marker — action already happened</td>
+        <td class="cell-notes">
+          Similar in function to Thai แล้ว but tone and vowel differ.<br>
+          <span class="tag">particle</span>
+          <span class="tag">grammar</span>
+        </td>
+      </tr>
+
+      <tr data-cat="verb" data-search="ดิ่ง ding to know knowledge">
+        <td class="cell-thai">ดิ่ง</td>
+        <td class="cell-roman">ding</td>
+        <td class="cell-meaning">To know</td>
+        <td class="cell-notes">
+          <span class="tag">verb</span>
+        </td>
+      </tr>
+
+      <tr data-cat="particle" data-search="บ่ bor negation not ไม่">
+        <td class="cell-thai">บ่</td>
+        <td class="cell-roman">bor</td>
+        <td class="cell-meaning">Negation — not</td>
+        <td class="cell-notes">
+          Equivalent to Thai ไม่, but placed <em>after</em> the verb. Low tone.<br>
+          <span class="tag">particle</span>
+          <span class="tag">grammar</span>
+        </td>
+      </tr>
+
+      <tr data-cat="phrase" data-search="เอิมเท้ erm tao does it taste good question food">
+        <td class="cell-thai">เอิมเท้</td>
+        <td class="cell-roman">erm tao</td>
+        <td class="cell-meaning">Does it taste good?</td>
+        <td class="cell-notes">
+          เอิม (tasty) + เท้ (question particle).<br>
+          <span class="tag">phrase</span>
+          <span class="tag">food</span>
+        </td>
+      </tr>
+
+      <tr data-cat="phrase" data-search="เอิมห้า erm ha yes it tastes good food answer">
+        <td class="cell-thai">เอิมห้า</td>
+        <td class="cell-roman">erm ha</td>
+        <td class="cell-meaning">Yes, it tastes good</td>
+        <td class="cell-notes">
+          เอิม (tasty) + ห้า (agreement). Response to เอิมเท้.<br>
+          <span class="tag">phrase</span>
+          <span class="tag">food</span>
+        </td>
+      </tr>
+
+      <tr data-cat="phrase" data-search="กะไชเหล่า ga chai lao i'm full already eaten">
+        <td class="cell-thai">กะไชเหล่า</td>
+        <td class="cell-roman">ga-chai lao</td>
+        <td class="cell-meaning">I'm full</td>
+        <td class="cell-notes">
+          กะไช (full stomach) + เหล่า (completive marker — already happened).<br>
+          <span class="tag">phrase</span>
+          <span class="tag">food</span>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <p class="no-results" id="no-results">No entries match your search.</p>
+
+  <div class="add-note">
+    New entries are added as they are documented and verified by a native speaker in Ban Ta Thip, Surin.
+  </div>
+
+</main>
+
+<footer>
+  กวย อาเจียง Language Archive · Ban Ta Thip, Surin · an independent documentation project
+</footer>
+
+<script>
+  const rows = Array.from(document.querySelectorAll('#vocab-body tr'));
+  const searchInput = document.getElementById('search');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const noResults = document.getElementById('no-results');
+  const entryCount = document.getElementById('entry-count');
+
+  let currentCat = 'all';
+
+  function applyFilters() {
+    const q = searchInput.value.toLowerCase().trim();
+    let visible = 0;
+
+    rows.forEach(row => {
+      const catMatch = currentCat === 'all' || row.dataset.cat === currentCat;
+      const searchMatch = !q || row.dataset.search.includes(q)
+        || row.querySelector('.cell-thai').textContent.includes(q)
+        || row.querySelector('.cell-meaning').textContent.toLowerCase().includes(q);
+
+      const show = catMatch && searchMatch;
+      row.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+
+    noResults.style.display = visible === 0 ? 'block' : 'none';
+    entryCount.textContent = visible + (visible === 1 ? ' entry' : ' entries');
+  }
+
+  searchInput.addEventListener('input', applyFilters);
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCat = btn.dataset.cat;
+      applyFilters();
+    });
+  });
+</script>
+
+</body>
+</html>
